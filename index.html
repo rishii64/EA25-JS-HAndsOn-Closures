@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Coding Assignment [Closures]</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>JS HandsOn-16 [Closures]</h1>
+    <h2>Guess the correct output and write down the reason behind the output in details.</h2>
+
+     <div class="qstn">
+        <span>Q1.</span>Print output:
+     </div>
+     <div class="ans">
+         <div>
+             <pre>
+                function counter() {
+                    var counter = 0;
+                    function IncreaseCounter() {
+                        return counter += 1;
+                    };
+                    return IncreaseCounter;
+                }
+                var counter = counter();
+                alert(counter());
+                alert(counter());
+                alert(counter());
+                alert(counter());
+             </pre>
+         </div>
+        <div>
+             <pre>
+                 <b>Output:</b>
+                 1
+                 2
+                 3
+                 4
+
+                 <b>Reason:</b>
+                 The code consists of two functions, counter and IncreaseCounter. Counter declears a variable with a value of 0 
+                 and increases the counter variable +1. The counter() function returns a function, which is stored in a counter 
+                 variable. The counter function is called three times within an alert, alerting the counter as 1 2 3 4. The 
+                 closure feature of JavaScript is also used.
+             </pre>
+        </div> 
+     </div>
+
+     <div class="qstn">
+        <span>Q2.</span>Print output:
+     </div>
+     <div class="ans">
+         <div>
+             <pre> 
+                let count = 0;
+                (function () {
+                if (count === 0) {
+                    let count = 1;
+                    console.log(count); // What is logged?
+                }
+                console.log(count); // What is logged?
+                })();
+             </pre>
+         </div>
+        <div>
+             <pre>
+                 <b>Output:</b>
+                 1
+                 0
+
+                 <b>Reason:</b>
+                 The code initializes a variable named count with 0 and uses an immediately invoked function expression 
+                 (IIFE) to create a new block scope. An if statement checks if the outer count equals 0, resulting in a 
+                 new block-scoped variable named count. The inner count is logged 1, and the outer count remains 0.
+                 
+             </pre>
+        </div> 
+     </div>
+
+     <div class="qstn">
+        <span>Q3.</span>Print output
+     </div>
+     <div class="ans">
+         <div>
+             <pre>
+                for (var i = 0; i < 3; i++) {
+                    setTimeout(function log() {
+                      console.log(i); // What is logged?
+                    }, 1000);
+                }
+             </pre>
+         </div>
+        <div>
+             <pre>
+                <b>Output:</b>
+                3
+                3
+                3
+
+                <b>Reason</b>
+                The for loop initializes a variable i with a value of 0, checks if it is less than 3, & proceeds. Inside 
+                the loop, a setTimeout function is called, which logs the current value of i. The loop increments i using 
+                i++ until it reaches 3. The setTimeout function schedules callback function execution after 1000 
+                milliseconds. Callback functions reference the same variable i, which has a global scope.
+               
+             </pre>
+        </div> 
+         
+     </div>
+     <div class="qstn">
+        <span>Q4.</span> Write a code to calculate area of a rectangle using inner function. In this case outer 
+        function should accept parameter length and inner function should accept parameter breadth.
+     </div>
+     <div class="ans">
+         <div>
+             <pre>
+                <b>Answer:</b>
+                (function outerFunction(length) {
+                    (function innerFunction(breadth) {
+                        let area = length * breadth;
+                      console.log("Area of rectangle is", area);
+                    })(5)
+                })(10)
+             </pre>
+         </div>
+        <div>
+             <pre>
+                <b>Output:</b>
+                Area of rectangle is 50
+             </pre>
+        </div> 
+     </div>
+
+        <div class="qstn">
+            <span>Q5.</span>Take a variable in outer function and create an inner function to increase the counter every time it is called
+        </div>
+        <div class="ans">
+            <div>
+                <pre>
+                    function outerFunction() {
+                        let counter = 0;
+                        function innerFunction() {
+                          counter++;
+                        }
+                        return innerFunction;
+                      }
+                      let incrementCounter = outerFunction();
+                      incrementCounter();
+                      incrementCounter();
+                      incrementCounter();
+                      console.log("Counter is", counter);
+                </pre>
+            </div>
+            <div>
+                <pre>
+                    <b>Output:</b>
+
+                    <b>Reason:</b>
+                    The code will give an error because we are trying to access the counter variable which is not 
+                    present in the global scope. The counter variable can only accessible inside the outerFunction 
+                    and innerFunction (because of Closures).
+                   
+                </pre>
+            </div> 
+        </div>
+
+        <div class="qstn">
+            <span>Q6.</span>Print the Output:
+        </div>
+        <div class="ans">
+            <div>
+                <pre>
+                    var a = 12;
+                    (function () {
+                    alert(a);
+                    })();
+                </pre>
+            </div>
+            <div>
+                <pre>
+                    <b>Output:</b>
+                    12
+
+                    <b>Reason:</b>
+                    First we defined the variable 'a' with var keyword and value 12. The variable 'a' is defined in global scope and can use it 
+                    anywhere. The code then enters an IIFE, where we alert the variable 'a' and results the value 12.
+                    
+                </pre>
+            </div> 
+        </div>
+
+        <div class="qstn">
+            <span>Q7.</span>Print the Output:
+        </div>
+        <div class="ans">
+            <div>
+                <pre>
+                    var a = 10;
+                    (function (){
+                        console.log(a);
+                        var a = 20;
+                    })();
+                </pre>
+            </div>
+            <div>
+                <pre>
+                    <b>Output:</b>
+                    undefined
+
+                    <b>Reason:</b>
+                    Question - 7
+                    This code prints 'undefined' because inside the IIFE, we try to log the values of a before it's initializtion due to 
+                    variable hoisting. The declaration of var within the IIFE is moved to the top, which means that it exists within the 
+                    IIFE's scope even before its actual line of declaration. Since the var a inside the IIFE is hoisted to the top, when 
+                    the console.log(a) line is executed, the value of a within the IIFE's scope is undefined.
+
+                </pre>
+            </div> 
+        </div>
+
+         <div class="qstn">
+            <span>Q8.</span>Print the Output:
+        </div>
+        <div class="ans">
+            <div>
+                <pre>
+                    var globalVar = "xyz";
+                    (function outerFunc(outerArg) {
+                        var outerVar = 'a';
+                        (function innerFunc(innerArg) {
+                        var innerVar = 'b';
+                        console.log(
+                            "outerArg = " + outerArg + "\n" +
+                            "innerArg = " + innerArg + "\n" +
+                            "outerVar = " + outerVar + "\n" +
+                            "innerVar = " + innerVar + "\n" +
+                            "globalVar = " + globalVar);
+                        })(456);
+                    })(123);
+                </pre>
+            </div>
+            <div>
+                <pre>
+                    <b>Output:</b>
+                    outerArg = 123
+                    innerArg = 456
+                    outerVar = a
+                    innerVar = b
+                    globalVar = xyz
+
+                    <b>Reason:</b>
+                    The above code defines two functions - outerFunc() with an argument outerArg, and calls innerFunc()with an argument, innerArg.
+                    globalVar is a global variable, which is accessible from any scope and outerVar is a local variable to outerFunc() and innerVar is a local variable to innerFunc().
+
+                    The outer function outerFunc() is called with the argument 123.
+                    outerFunc() defines a local variable outerVar and assigns it the value a.
+                    outerFunc() calls innerFunc() with the argument 456.
+                    innerFunc() defines a local variable innerVar and assigns it the value b.
+                    innerFunc() logs the values of all five variables.
+                    innerFunc() returns.
+                    outerFunc() returns.
+                    This code demonstrates the concept of function scopes and how variables from outer scopes are accessible within inner scopes due to closures. Each nested function has access to its own parameters and variables as well as those of the enclosing functions and the global scope.
+                   
+                </pre>
+            </div> 
+        </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
